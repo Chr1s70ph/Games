@@ -19,11 +19,13 @@
 			$(document).keydown(function (eventObject) {
 				switch (eventObject.keyCode) {
 					case LEFT_ARROW:
+						moveleft()
 						break
 					case UP_ARROW:
 						moveup()
 						break
 					case RIGHT_ARROW:
+						moveright()
 						break
 					case DOWN_ARROW:
 						movedown()
@@ -34,8 +36,25 @@
 				}
 			})
 
-			$(document).keyup(function () {
-				clearmove()
+			$(document).keyup(function (eventObject) {
+				switch (eventObject.keyCode) {
+					case LEFT_ARROW:
+						clearmoveside()
+						break
+					case UP_ARROW:
+						clearmoveup()
+						break
+					case RIGHT_ARROW:
+						clearmoveside()
+						break
+					case DOWN_ARROW:
+						clearmoveup()
+						break
+
+					default:
+						clearmove()
+						break
+				}
 			})
 		</script>
 		<!-- body.js from FlappyBlock -->

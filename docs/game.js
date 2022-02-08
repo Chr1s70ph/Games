@@ -61,7 +61,12 @@ function component(width, height, color, x_cord, y_cord, type) {
 		)
 	}
 	this.outOfBouns = function () {
-		return this.y_cord > gameArea.canvas.height || this.y_cord < 0
+		return (
+			this.y_cord > gameArea.canvas.height ||
+			this.y_cord < 0 ||
+			this.x_cord < 0 ||
+			this.x_cord + this.width > gameArea.canvas.width
+		)
 	}
 }
 
@@ -106,15 +111,26 @@ function everyInterval(n) {
 	return false
 }
 
+function moveleft() {
+	player.speed_x = -1 * PLAYERMOVE_SPEED_MODIFIER
+}
+
 function moveup() {
 	player.speed_y = -1 * PLAYERMOVE_SPEED_MODIFIER
+}
+
+function moveright() {
+	player.speed_x = 1 * PLAYERMOVE_SPEED_MODIFIER
 }
 
 function movedown() {
 	player.speed_y = 1 * PLAYERMOVE_SPEED_MODIFIER
 }
 
-function clearmove() {
+function clearmoveup() {
 	player.speed_y = 0
+}
+
+function clearmoveside() {
 	player.speed_x = 0
 }
