@@ -1,2 +1,2 @@
-ln Flappyblocks/game.js docs/
-ln FlappyBlocks/style.css docs/
+ln -f FlappyBlock/game.js docs/
+ln -f FlappyBlock/style.css docs/
