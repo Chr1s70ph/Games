@@ -1,47 +1,54 @@
 <!DOCTYPE html>
-<head>
-	<script language="javascript" type="text/javascript" src="game.js"></script>
-	<link rel="stylesheet" href="style.css" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
 
-<script>
-	function includeHTML() {
-		var z, i, elmnt, file, xhttp
-		/* Loop through a collection of all HTML elements: */
-		z = document.getElementsByTagName("*")
-		for (i = 0; i < z.length; i++) {
-			elmnt = z[i]
-			/*search for elements with a certain atrribute:*/
-			file = elmnt.getAttribute("w3-include-html")
-			if (file) {
-				/* Make an HTTP request using the attribute value as the file name: */
-				xhttp = new XMLHttpRequest()
-				xhttp.onreadystatechange = function () {
-					if (this.readyState == 4) {
-						if (this.status == 200) {
-							elmnt.innerHTML = this.responseText
-						}
-						if (this.status == 404) {
-							elmnt.innerHTML = "Page not found."
-						}
-						/* Remove the attribute, and call this function once more: */
-						elmnt.removeAttribute("w3-include-html")
-						includeHTML()
-					}
+<html style="display: table; margin: auto">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body
+		onload="startGame()"
+		style="margin-left: auto; margin-right: auto; display: table-cell; vertical-align: middle"
+	>
+		<script language="javascript" type="text/javascript" src="game.js"></script>
+		<script>
+			const LEFT_ARROW = 37
+			const UP_ARROW = 38
+			const RIGHT_ARROW = 39
+			const DOWN_ARROW = 40
+
+			$(document).keydown(function (eventObject) {
+				switch (eventObject.keyCode) {
+					case LEFT_ARROW:
+						break
+					case UP_ARROW:
+						moveup()
+						break
+					case RIGHT_ARROW:
+						break
+					case DOWN_ARROW:
+						movedown()
+						break
+
+					default:
+						break
 				}
-				xhttp.open("GET", file, true)
-				xhttp.send()
-				/* Exit the function: */
-				return
-			}
-		}
-	}
-</script>
-<html>
-	<div w3-include-html="body.html"></div>
-	<body onload="startGame()"></body>
-	<script>
-		includeHTML()
-	</script>
+			})
+
+			$(document).keyup(function () {
+				clearmove()
+			})
+		</script>
+		<!-- body.js from FlappyBlock -->
+		<div style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
+			<button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button
+			><br /><br />
+			<button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">
+				DOWN
+			</button>
+			<br />
+		</div>
+		<p style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
+			Restart if you died
+		</p>
+	</body>
 </html>

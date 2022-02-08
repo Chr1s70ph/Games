@@ -2,6 +2,7 @@
 
 <html style="display: table; margin: auto">
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body
@@ -9,6 +10,34 @@
 		style="margin-left: auto; margin-right: auto; display: table-cell; vertical-align: middle"
 	>
 		<script language="javascript" type="text/javascript" src="game.js"></script>
+		<script>
+			const LEFT_ARROW = 37
+			const UP_ARROW = 38
+			const RIGHT_ARROW = 39
+			const DOWN_ARROW = 40
+
+			$(document).keydown(function (eventObject) {
+				switch (eventObject.keyCode) {
+					case LEFT_ARROW:
+						break
+					case UP_ARROW:
+						moveup()
+						break
+					case RIGHT_ARROW:
+						break
+					case DOWN_ARROW:
+						movedown()
+						break
+
+					default:
+						break
+				}
+			})
+
+			$(document).keyup(function () {
+				clearmove()
+			})
+		</script>
 		<!-- body.js from FlappyBlock -->
 		<div style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
 			<button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button

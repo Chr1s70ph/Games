@@ -60,6 +60,9 @@ function component(width, height, color, x_cord, y_cord, type) {
 			object.y_cord + object.height < this.y_cord
 		)
 	}
+	this.outOfBouns = function () {
+		return this.y_cord > gameArea.canvas.height || this.y_cord < 0
+	}
 }
 
 function refreshGame() {
@@ -68,7 +71,6 @@ function refreshGame() {
 	gameArea.clear()
 	gameArea.frameNo += 1
 	if (gameArea.frameNo == 1 || everyInterval(300 / OBSTACLE_MOVE_SPEED_MODIFIER)) {
-		console.log(gameArea.frameNo)
 		x = gameArea.canvas.width
 		minHeight = 20
 		maxHeight = 200
@@ -81,7 +83,7 @@ function refreshGame() {
 	}
 
 	for (item in obstacles) {
-		if (player.intersects(obstacles[item])) {
+		if (player.outOfBouns() || player.intersects(obstacles[item])) {
 			gameArea.stop()
 		}
 		obstacles[item].x_cord -= 1 * OBSTACLE_MOVE_SPEED_MODIFIER
@@ -105,20 +107,14 @@ function everyInterval(n) {
 }
 
 function moveup() {
-	player.speed_y -= 1 * PLAYERMOVE_SPEED_MODIFIER
+	player.speed_y = -1 * PLAYERMOVE_SPEED_MODIFIER
 }
 
 function movedown() {
-	player.speed_y += 1 * PLAYERMOVE_SPEED_MODIFIER
+	player.speed_y = 1 * PLAYERMOVE_SPEED_MODIFIER
 }
 
 function clearmove() {
 	player.speed_y = 0
 	player.speed_x = 0
-}
-
-window.onkeydown = function () {
-	if (gfg.keyCode === 32) {
-		moveup()
-	}
 }
