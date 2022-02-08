@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html style="display: table; margin: auto">
+	<head>
+		<link rel="stylesheet" href="../FlappyBlock/style.css" />
+	</head>
+	<body
+		onload="startGame()"
+		style="margin-left: auto; margin-right: auto; display: table-cell; vertical-align: middle"
+	>
+		<script
+			language="javascript"
+			type="text/javascript"
+			src="../FlappyBlock/game.js"
+		></script>
+		<!-- body.js from FlappyBlock -->
+		<div style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
+			<button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button
+			><br /><br />
+			<button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">
+				DOWN
+			</button>
+			<br />
+		</div>
+		<p style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
+			Restart if you died
+		</p>
+	</body>
+</html>
