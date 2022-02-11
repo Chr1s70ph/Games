@@ -4,8 +4,10 @@ const PLAYERMOVE_SPEED_MODIFIER = 3
 var obstacles = []
 var player
 var Score
+var isGameOver
 
 function startGame() {
+	isGameOver = false
 	player = new component(30, 20, "#CC3030", 20, 105)
 	Score = new component("30px", "Sans-Serif", "#000000", 15, 30, "text")
 	gameArea.start()
@@ -18,7 +20,6 @@ var gameArea = {
 		this.canvas.height = 500
 		this.context = this.canvas.getContext("2d")
 		document.body.children[2].appendChild(this.canvas, document.body.childNodes[0])
-		console.log(document.body.children)
 		this.frameNo = 0
 		this.interval = setInterval(refreshGame, 10)
 	},
@@ -90,8 +91,14 @@ function refreshGame() {
 
 	for (item in obstacles) {
 		if (player.outOfBouns() || player.intersects(obstacles[item])) {
-			gameArea.stop()
+			isGameOver = true
+			gameOver(isGameOver)
+			break
 		}
+		// Delete Obstacles that are off the screen
+		if (obstacles[item].x_cord < -obstacles[item].width) obstacles.shift()
+
+		// Move Obstacles
 		obstacles[item].x_cord -= 1 * OBSTACLE_MOVE_SPEED_MODIFIER
 		obstacles[item].newPos()
 		obstacles[item].update()
@@ -110,6 +117,39 @@ function everyInterval(n) {
 		return true
 	}
 	return false
+}
+
+function gameOver(isGameOver) {
+	gameArea.stop()
+	for (const item in obstacles) delete obstacles[item]
+	player = null
+	gameArea.clear()
+
+	ctx.fillStyle = "red"
+	gameArea.context.textAlign = "center"
+	gameArea.context.fillText(
+		`Game Over`,
+		gameArea.canvas.width / 2,
+		gameArea.canvas.height / 2.5
+	)
+	ctx.fillStyle = "black"
+	gameArea.context.fillText(
+		`Your Score: ${gameArea.frameNo}`,
+		gameArea.canvas.width / 2,
+		gameArea.canvas.height / 2
+	)
+	gameArea.context.fillText(
+		`Press Space to restart`,
+		gameArea.canvas.width / 2,
+		gameArea.canvas.height / 1.4
+	)
+
+	return $(document).keydown(function (eventObject) {
+		if (eventObject.keyCode === 32 && isGameOver) {
+			isGameOver = false
+			return startGame()
+		}
+	})
 }
 
 function moveleft() {

@@ -15,6 +15,7 @@
 			const DOWN_ARROW = 40
 
 			$(document).keydown(function (eventObject) {
+				if (isGameOver) return
 				switch (eventObject.keyCode) {
 					case LEFT_ARROW:
 						moveleft()
@@ -35,6 +36,7 @@
 			})
 
 			$(document).keyup(function (eventObject) {
+				if (isGameOver) return
 				switch (eventObject.keyCode) {
 					case LEFT_ARROW:
 						clearmoveside()
