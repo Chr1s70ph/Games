@@ -1,7 +1,13 @@
 canvas {
-	border: 1px solid #d3d3d3;
-	background-color: #f1f1f1;
-}
-body {
-	align-items: center;
+	border: 0px solid #d3d3d3;
+	background: rgba(2, 0, 36, 0.5);
+	background: linear-gradient(
+		0deg,
+		rgba(2, 0, 36, 0.5) 0%,
+		rgba(9, 9, 121, 0.5) 3%,
+		rgba(61, 223, 255, 0.5) 30%,
+		rgba(0, 213, 255, 0.5) 100%
+	);
+	backdrop-filter: blur(50px);
+	border-radius: 5px;
 }

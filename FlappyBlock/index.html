@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 
-<html style="display: table; margin: auto">
+<html>
 	<head>
+		<link rel="stylesheet" href="../mainStyle.css" type="text/css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="style.css" />
 	</head>
-	<body
-		onload="startGame()"
-		style="margin-left: auto; margin-right: auto; display: table-cell; vertical-align: middle"
-	>
+	<body onload="startGame()">
 		<script language="javascript" type="text/javascript" src="game.js"></script>
 		<script>
 			const LEFT_ARROW = 37
@@ -57,8 +55,36 @@
 				}
 			})
 		</script>
-		<!-- body.js from FlappyBlock -->
-		<div style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
+
+		<!-- NavBar -->
+		<div id="nav" class="navbar">
+			<div class="home">
+				<a href="../index.html"><span>Home</span></a>
+			</div>
+			<div class="dropdown">
+				<nav>
+					<ul class="list">
+						<li>
+							<a href="index.html"><span>Flappy Block</span></a>
+						</li>
+						<li>
+							<a href="../index.html"><span>Coming Soon™</span> </a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+		<!-- buttons -->
+		<div
+			style="
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+				width: 480px;
+				margin-top: 100px;
+			"
+		>
 			<button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button
 			><br /><br />
 			<button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">

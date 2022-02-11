@@ -1,0 +1,117 @@
+:root {
+	--hoverColor: rgba(27, 27, 47, 50);
+	--defaultHomeColor: rgb(74, 72, 95);
+}
+
+html {
+	scroll-behavior: smooth;
+	background-image: url("images/Shadow.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 50%;
+	background-position: center 10%;
+	background-color: black;
+}
+
+body {
+	color: white;
+}
+
+#nav {
+	font-family: "Poppins", sans-serif;
+	position: relative;
+	top: 20px;
+	margin-bottom: 5px;
+	font-weight: 400;
+	font-size: 20px;
+	max-width: 1080px;
+}
+
+.navbar {
+	-webkit-box-align: center !important;
+	text-align: left;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	margin: auto;
+}
+
+.navbar > div {
+	padding-bottom: 25px;
+}
+
+.home {
+	-webkit-box-flex: 0;
+	width: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin: auto;
+	flex: 0 0 16.666%;
+	max-width: 0 0 16.666%;
+	display: block !important;
+	box-sizing: border-box;
+	text-align: left;
+}
+
+.home > a {
+	background-color: var(--defaultHomeColor);
+	padding: 5px 20px;
+	border-radius: 30px;
+	transition: all 0.3s ease;
+	color: currentColor !important;
+	text-decoration: currentColor !important;
+}
+
+.home > a:hover {
+	background-color: var(--hoverColor);
+}
+
+.dropdown {
+	padding-left: -15px;
+	padding-right: -15px;
+	display: block !important;
+	-webkit-box-flex: 0;
+	flex: 0 0 83.3333%;
+	max-width: 83.3333%;
+	box-sizing: border-box;
+	text-align: right;
+	margin-bottom: 0;
+	margin-right: auto !important;
+}
+
+.list {
+	box-sizing: border-box;
+}
+
+.list::first-line {
+	padding: 10px 0;
+	text-decoration: none;
+}
+
+.navbar .dropdown .list > li {
+	display: inline-block;
+}
+
+.list > li {
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.list > li > a {
+	text-decoration: currentColor !important;
+	color: white;
+	padding: 10px 0;
+	transition: all 0.3s ease;
+}
+
+.list > li > a:hover {
+	background-color: var(--hoverColor);
+	border-radius: 30px;
+}
+
+.list > li > a > span {
+	padding: 5px 20px;
+}

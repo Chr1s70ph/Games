@@ -1,12 +1,12 @@
-const OBSTACLE_MOVE_SPEED_MODIFIER = 4
-const PLAYERMOVE_SPEED_MODIFIER = 4
+const OBSTACLE_MOVE_SPEED_MODIFIER = 3
+const PLAYERMOVE_SPEED_MODIFIER = 3
 
 var obstacles = []
 var player
 var Score
 
 function startGame() {
-	player = new component(30, 20, "blue", 20, 105)
+	player = new component(30, 20, "#CC3030", 20, 105)
 	Score = new component("30px", "Sans-Serif", "#000000", 15, 30, "text")
 	gameArea.start()
 }
@@ -17,7 +17,8 @@ var gameArea = {
 		this.canvas.width = 1000
 		this.canvas.height = 500
 		this.context = this.canvas.getContext("2d")
-		document.body.insertBefore(this.canvas, document.body.childNodes[0])
+		document.body.children[2].appendChild(this.canvas, document.body.childNodes[0])
+		console.log(document.body.children)
 		this.frameNo = 0
 		this.interval = setInterval(refreshGame, 10)
 	},
@@ -83,8 +84,8 @@ function refreshGame() {
 		minGap = 50
 		maxGap = 200
 		gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap)
-		obstacles.push(new component(30, height, "black", x, 0))
-		obstacles.push(new component(20, x - height - gap, "red", x, height + gap))
+		obstacles.push(new component(30, height, "#50FF50", x, 0))
+		obstacles.push(new component(30, x - height - gap, "#50FF50", x, height + gap))
 	}
 
 	for (item in obstacles) {
@@ -133,4 +134,9 @@ function clearmoveup() {
 
 function clearmoveside() {
 	player.speed_x = 0
+}
+
+function clearmove() {
+	player.speed_x = 0
+	player.speed_y = 0
 }
