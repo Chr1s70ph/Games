@@ -9,24 +9,23 @@
 	<body onload="startGame()">
 		<script language="javascript" type="text/javascript" src="game.js"></script>
 		<script>
-			const LEFT_ARROW = 37
-			const UP_ARROW = 38
-			const RIGHT_ARROW = 39
-			const DOWN_ARROW = 40
-
 			$(document).keydown(function (eventObject) {
 				if (isGameOver) return
 				switch (eventObject.keyCode) {
-					case LEFT_ARROW:
+					case keycodes.left_arrow:
+					case keycodes.a:
 						moveleft()
 						break
-					case UP_ARROW:
+					case keycodes.up_arrow:
+					case keycodes.w:
 						moveup()
 						break
-					case RIGHT_ARROW:
+					case keycodes.right_arrow:
+					case keycodes.d:
 						moveright()
 						break
-					case DOWN_ARROW:
+					case keycodes.down_arrow:
+					case keycodes.s:
 						movedown()
 						break
 
@@ -38,16 +37,20 @@
 			$(document).keyup(function (eventObject) {
 				if (isGameOver) return
 				switch (eventObject.keyCode) {
-					case LEFT_ARROW:
+					case keycodes.left_arrow:
+					case keycodes.a:
 						clearmoveside()
 						break
-					case UP_ARROW:
+					case keycodes.up_arrow:
+					case keycodes.w:
 						clearmoveup()
 						break
-					case RIGHT_ARROW:
+					case keycodes.right_arrow:
+					case keycodes.d:
 						clearmoveside()
 						break
-					case DOWN_ARROW:
+					case keycodes.down_arrow:
+					case keycodes.s:
 						clearmoveup()
 						break
 
