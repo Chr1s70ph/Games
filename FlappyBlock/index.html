@@ -97,8 +97,48 @@
 			</button>
 			<br />
 		</div>
-		<p style="margin-left: auto; margin-right: auto; text-align: center; width: 480px">
-			Restart if you died
-		</p>
+		<br />
+		<div id="settings" style="margin-left: auto; margin-right: auto; text-align: center">
+			<!-- <details > -->
+			<summary>Settings</summary>
+			<p>
+				Player Speed:
+				<input
+					type="range"
+					id="player_speed_slider"
+					max="360"
+					min="0"
+					oninput="updateSettings(), player_speed_text.value=player_speed_slider.value"
+				/>
+				<input
+					type="number"
+					id="player_speed_text"
+					oninput="updateSettings(),
+				player_speed_slider.value=player_speed_text.value"
+					style="width: 50px"
+				/>
+			</p>
+			<p>
+				Object Speed:
+				<input
+					type="range"
+					id="object_speed_slider"
+					max="360"
+					min="0"
+					oninput="updateSettings(), object_speed_text.value=object_speed_slider.value"
+				/>
+				<input
+					type="number"
+					id="object_speed_text"
+					oninput="updateSettings(), object_speed_slider.value=object_speed_text.value"
+					style="width: 50px"
+				/>
+			</p>
+			<p>
+				Hitboxes active:
+				<input type="checkbox" id="hitboxes_active" onchange="updateSettings()" />
+			</p>
+			<!-- </details> -->
+		</div>
 	</body>
 </html>

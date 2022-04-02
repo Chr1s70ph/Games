@@ -1,3 +1,8 @@
+var script = document.createElement("script")
+script.src = "https://code.jquery.com/jquery-3.4.1.min.js"
+script.type = "text/javascript"
+document.getElementsByTagName("head")[0].appendChild(script)
+
 const keycodes = {
 	alt: 18,
 	tab: 9,
@@ -100,13 +105,31 @@ const keycodes = {
 	space: 32
 }
 
-const OBSTACLE_MOVE_SPEED_MODIFIER = 3
-const PLAYERMOVE_SPEED_MODIFIER = 3
+let PLAYERMOVE_SPEED_MODIFIER = 3
+let OBSTACLE_MOVE_SPEED_MODIFIER = 3
+let HITBOXES_ACTIVE = true
 
 var obstacles = []
 var player
 var Score
 var isGameOver
+
+$(function () {
+	$("#player_speed_slider").val(PLAYERMOVE_SPEED_MODIFIER)
+	$("#player_speed_text").val(PLAYERMOVE_SPEED_MODIFIER)
+	$("#object_speed_slider").val(OBSTACLE_MOVE_SPEED_MODIFIER)
+	$("#object_speed_text").val(OBSTACLE_MOVE_SPEED_MODIFIER)
+	$("#hitboxes_active").prop("checked", HITBOXES_ACTIVE)
+})
+
+function updateSettings() {
+	PLAYERMOVE_SPEED_MODIFIER = parseInt(document.getElementById("player_speed_slider").value)
+	OBSTACLE_MOVE_SPEED_MODIFIER = parseInt(
+		document.getElementById("object_speed_slider").value
+	)
+	HITBOXES_ACTIVE =
+		document.querySelector("#hitboxes_active:checked")?.value == "on" ? true : false
+}
 
 function startGame() {
 	isGameOver = false
@@ -192,10 +215,12 @@ function refreshGame() {
 	}
 
 	for (item in obstacles) {
-		if (player.outOfBouns() || player.intersects(obstacles[item])) {
-			isGameOver = true
-			gameOver(isGameOver)
-			break
+		if (HITBOXES_ACTIVE) {
+			if (player.outOfBouns() || player.intersects(obstacles[item])) {
+				isGameOver = true
+				gameOver(isGameOver)
+				break
+			}
 		}
 		// Delete Obstacles that are off the screen
 		if (obstacles[item].x_cord < -obstacles[item].width) obstacles.shift()
@@ -210,8 +235,8 @@ function refreshGame() {
 	Score.text = `SCORE: ${gameArea.frameNo}`
 	Score.update()
 	/*Update Player*/
-	player.newPos()
-	player.update()
+	player?.newPos()
+	player?.update()
 }
 
 function everyInterval(n) {
