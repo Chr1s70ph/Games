@@ -1,0 +1,39 @@
+html {
+    background-color: white;
+    background-image: none !important;
+}
+
+
+.game {
+    height: 90%;
+    width: 90%;
+}
+
+:root {
+    --grid-cols: 1;
+    --grid-rows: 1;
+}
+
+
+#container {
+    display: grid;
+    grid-gap: 0;
+    width: 100%;
+
+    grid-template-columns: repeat(var(--grid-cols), 3rem);
+    grid-template-rows: repeat(var(--grid-rows), 3rem);
+
+}
+
+
+.grid-item {
+    display: inline-block;
+    padding: 1em;
+    margin: 0;
+    background-color: #ddd;
+    border: 1px solid #fff;
+    text-align: center;
+
+    height: 3rem;
+    width: 53em;
+}
