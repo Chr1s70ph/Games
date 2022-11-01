@@ -73,13 +73,18 @@ class Minesweeper {
 
 	fieldClick(e) {
 		if (e.button == 0) { // Left-Click
-			minesweeper.revealField(this.index);
-			minesweeper.checkZeroCluster(this.value, this.index_x, this.index_y);
+			console.log(this.innerText);
+			if(this.flag_set !== true && this.innerText === ""){
+				minesweeper.revealField(this.index);
+				minesweeper.checkZeroCluster(this.value, this.index_x, this.index_y);
+			}
 		} else if (e.button == 2) { // Right-Click
 			console.log(this);
-			if(!this.style.backgroundColor){
+			if(this.flag_set !== true && this.innerText === ""){
+				this.flag_set = true
 				this.style.backgroundColor = "#0000cc";
-			} else {
+			} else if(this.innerText === "") {
+				this.flag_set = false
 				this.style.backgroundColor = null;
 			}
 		}
@@ -87,7 +92,7 @@ class Minesweeper {
 
 	revealField(index) {
 		setTimeout(100)
-		this.container.children[index].innerText = this.value === -1 ? "💣" : this.container.children[index].value;
+		this.container.children[index].innerText = this.container.children[index].value === -1 ? "💣" : this.container.children[index].value;
 		if (this.container.children[index].value === VALUE_MINE) {
 			/**
 			 * TODO: handle the boom boom bäm bitsch
@@ -132,7 +137,12 @@ class Minesweeper {
 			}
 		}
 	}
-
+	beautifyGrid() {
+		this.container.children[0].style.borderRadius = "1rem 0 0 0";
+		this.container.children[this.width - 1].style.borderRadius = "0 1rem 0 0";
+		this.container.children[this.width * (this.height - 1)].style.borderRadius = "0 0 0 1rem";
+		this.container.lastChild.style.borderRadius = "0 0 1rem 0";
+	}
 }
 
 
@@ -141,6 +151,7 @@ function startGame() {
 	document.addEventListener('contextmenu', event => event.preventDefault());
 	minesweeper = new Minesweeper(20, 20, 0.23)
 	minesweeper.makeRows()
+	minesweeper.beautifyGrid()
 	// gameArea.start()
 }
 
