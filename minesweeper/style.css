@@ -6,7 +6,9 @@ html {
 
 .game {
     height: 90%;
-    width: 90%;
+    width: 100%;
+    border: 10px, lime;
+    border-radius: 200px;
 }
 
 :root {
@@ -16,24 +18,26 @@ html {
 
 
 #container {
+    justify-content: center;
     display: grid;
     grid-gap: 0;
-    width: 100%;
 
     grid-template-columns: repeat(var(--grid-cols), 3rem);
     grid-template-rows: repeat(var(--grid-rows), 3rem);
+
 
 }
 
 
 .grid-item {
-    display: inline-block;
-    padding: 1em;
+    /* display: inline-block; */
+    display: block;
+    padding: 0em;
     margin: 0;
-    background-color: #ddd;
+    background-color: rgba(221, 221, 221, 0.717);
     border: 1px solid #fff;
     text-align: center;
 
     height: 3rem;
-    width: 53em;
+    width: 3em;
 }

@@ -1,5 +1,6 @@
 const VALUE_MINE = -1;
 const VALUE_NO_MINE = 0;
+const _DEBUG_ = false;
 class Minesweeper {
 	constructor(pHeight, pWidth, pMineProbability) {
 		this.height = pHeight;
@@ -24,58 +25,122 @@ class Minesweeper {
 	coreGenMines() {
 		for (let i = 0; i < this.width; i++) {
 			for (let j = 0; j < this.height; j++) {
-				this.field[i][j] = (Math.random() > this.mineProbability) ? VALUE_MINE : VALUE_NO_MINE;
+				this.field[i][j] = (Math.random() < this.mineProbability) ? VALUE_MINE : VALUE_NO_MINE;
 			}
 		}
 	}
 
+	/**
+	 * Some fancy counting things I don't understand
+	 * written by: https://github.com/itzFlubby
+	 */
 	coreGenMineCount() {
 		for (let i = 0; i < this.width; i++) {
 			for (let j = 0; j < this.height; j++) {
 				let mineCount = 0;
 				if (this.field[i][j] === VALUE_MINE) { continue; }
-				if ((i !== 0 && j !== 0) && (i !== (this.width - 1) && j !== (this.height - 1))) {
-					for (let k = 0; k < 3; k++) {
-						for (let l = 0; l < 3; l++) {
-							if ((this.field[i - 1 + k][j - 1 + l]) === VALUE_MINE) {
-								mineCount++;
-							}
+				for (let k = ((i === 0) ? 0 : -1); k < ((i === (this.width - 1)) ? 1 : 2); k++) {
+					for (let l = ((j === 0) ? 0 : -1); l < ((j === (this.height - 1)) ? 1 : 2); l++) {
+						if ((this.field[i + k][j + l]) === VALUE_MINE) {
+							mineCount++;
 						}
 					}
-				} else {
-					// TODO : edge-cases
 				}
 				this.field[i][j] = mineCount;
 			}
 		}
 	}
 
-
-
 	makeRows() {
 		container.style.setProperty('--grid-rows', this.height);
 		container.style.setProperty('--grid-cols', this.width);
 		let widthIndex = 0;
 		let heightIndex = 0;
-		for (let c = 0; c < (this.height * this.width); c++) {
-		  let cell = document.createElement("div");
-		  widthIndex++;
-		  if (widthIndex === (this.width - 1)) {
-			heightIndex++;
-			widthIndex = 0;
-		  }
-		  cell.innerText = this.field[widthIndex][heightIndex];
-		  container.appendChild(cell).className = "grid-item";
-		};
-	  };
+		for (let cell_count = 0; cell_count < (this.height * this.width); cell_count++) {
+			let cell = document.createElement("div");
+			cell.addEventListener("mouseup", this.fieldClick)
+			cell.value = this.field[widthIndex][heightIndex];
+			cell.index_x = widthIndex; cell.index_y = heightIndex; cell.index = cell_count;
+			if (_DEBUG_) { cell.innerText = cell.value; cell.style.backgroundColor = cell.value === -1 ? "red": "light_gray"} // TODO: remove when finnisehed
+			container.appendChild(cell).className = "grid-item";
+			widthIndex++;
+			if (widthIndex === this.width) {
+				heightIndex++;
+				widthIndex = 0;
+			}
+		}
+	}
+
+	fieldClick(e) {
+		if (e.button == 0) { // Left-Click
+			minesweeper.revealField(this.index);
+			minesweeper.checkZeroCluster(this.value, this.index_x, this.index_y);
+		} else if (e.button == 2) { // Right-Click
+			console.log(this);
+			if(!this.style.backgroundColor){
+				this.style.backgroundColor = "#0000cc";
+			} else {
+				this.style.backgroundColor = null;
+			}
+		}
+	}
+
+	revealField(index) {
+		setTimeout(100)
+		this.container.children[index].innerText = this.value === -1 ? "💣" : this.container.children[index].value;
+		if (this.container.children[index].value === VALUE_MINE) {
+			/**
+			 * TODO: handle the boom boom bäm bitsch
+			 */
+			 this.container.children[index].style.backgroundColor = "red";
+		} else {
+			this.container.children[index].style.backgroundColor = "lime";
+		}
+	}
+
+	checkZeroCluster(value, index_x, index_y) {
+		if (value !== 0) {
+			return;
+		}
+		let scan_queue = [index_x + index_y * this.height];
+		let scan_index = 0;
+		do {
+			const scan_x = scan_queue[scan_index] % this.width;
+			const scan_y = parseInt(scan_queue[scan_index] / this.height);
+			for (let scan_x_offset = ((scan_x === 0) ? 0 : -1); scan_x_offset < ((scan_x === (this.width - 1)) ? 1 : 2); scan_x_offset++) {
+				for (let scan_y_offset = ((scan_y === 0) ? 0 : -1); scan_y_offset < ((scan_y === (this.height - 1)) ? 1 : 2); scan_y_offset++) {
+					const index = scan_x + scan_x_offset + (scan_y + scan_y_offset) * this.height;
+					if ((container.children[index].value) === 0) {
+						minesweeper.revealFieldsAround(index);
+						if (!scan_queue.includes(index)) {
+							scan_queue.push(index);
+							minesweeper.revealField(index);
+						}
+					}
+				}
+			}
+			scan_index++;
+		} while (scan_index !== scan_queue.length);
+	}
+
+	revealFieldsAround(index) {
+		const scan_x = index % this.width;
+		const scan_y = parseInt(index / this.height);
+		for (let scan_x_offset = ((scan_x === 0) ? 0 : -1); scan_x_offset < ((scan_x === (this.width - 1)) ? 1 : 2); scan_x_offset++) {
+			for (let scan_y_offset = ((scan_y === 0) ? 0 : -1); scan_y_offset < ((scan_y === (this.height - 1)) ? 1 : 2); scan_y_offset++) {
+				minesweeper.revealField(scan_x + scan_x_offset + (scan_y + scan_y_offset) * this.height);
+			}
+		}
+	}
 
 }
 
+
 let minesweeper = null;
 function startGame() {
-	minesweeper = new Minesweeper(20, 20, 0.5)
+	document.addEventListener('contextmenu', event => event.preventDefault());
+	minesweeper = new Minesweeper(20, 20, 0.23)
 	minesweeper.makeRows()
-	console.log("It works")
 	// gameArea.start()
 }
 
